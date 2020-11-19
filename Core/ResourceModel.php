@@ -15,7 +15,7 @@
             $this->model = $model;
             $this->table = $table;
         }
-        // function save
+        // function save dung de add va sua database
         public function save($model){
 
             $arrModel= $model->getProperties();
@@ -31,52 +31,33 @@
     
                 }
                 //Convert array to string
-                $strKeyIns= implode(', ',$insert_key);
-                $strPlaceholder=implode(', ',$placeholder);
+                $strKeyIns= implode(', ',$insert_key);//Name column
+                $strPlaceholder=implode(', ',$placeholder);// Value column
                 
                 //insert
                 $sql_insert="INSERT INTO $this->table ({$strKeyIns}) VALUES ({$strPlaceholder})";
                 $obj_insert =Database::getBdd()->prepare($sql_insert);
                 return $obj_insert->execute($arrModel);
             }else{
-                foreach ($arrModel as $k=>$item){
-                    array_push($placeUpdate, $k.' = :'.$k);
+                foreach ($arrModel as $key=>$item){
+                    if($key=='created_at'){
+                        continue;
+                    }
+                    $insert_key[] =$key;
+                    array_push($placeUpdate, $key. '='. "'$item'");
                 }
-    
+                
                 //update
                 $strPlaceUpdate=implode(', ',$placeUpdate);
-                $sql_update="UPDATE {$this->table} SET $strPlaceUpdate WHERE id=:id";
+                $sql_update="UPDATE {$this->table} SET {$strPlaceUpdate} WHERE id={$model->getId()}";
+                // var_dump($sql_update);
                 $obj_update=Database::getBdd()->prepare($sql_update);
                 return $obj_update->execute($arrModel);
             }
 
         }
         
-       public function edit($model){
-        $arrModel= $model->getProperties();
-
-        $placeholder=[];
-        $insert_key=[];
-        $placeUpdate=[];
-
-        foreach ($arrModel as $key=>$value){
-            $insert_key[] =$key;
-            array_push($placeholder, ':'.$key);
-
-        }
-        //Convert array to string
-        $strKeyIns= implode(', ',$insert_key);
-        $strPlaceholder=implode(', ',$placeholder);
-        foreach ($arrModel as $k=>$item){
-            array_push($placeUpdate, $k.' = :'.$k);
-        }
-        //update
-        $strPlaceUpdate=implode(', ',$placeUpdate);
-        $sql_update="UPDATE {$this->table} SET $strPlaceUpdate WHERE id=:id";
-        $obj_update=Database::getBdd()->prepare($sql_update);
-        return $obj_update->execute($arrModel);
-
-       }
+     
 
         //function delete data with $sql_delete is query sql and prepare is check name table and id, getBdd connect db,execute run query
         public function delete($id){
@@ -102,5 +83,5 @@
         }
     }
 
-?>
+
     

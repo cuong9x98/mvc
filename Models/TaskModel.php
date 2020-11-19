@@ -11,6 +11,7 @@ class TaskModel extends Model
     protected $updated_at;
     protected $created_at;
     
+    //Get set Id
     public function getId()
     {
         return $this->id;
@@ -19,6 +20,7 @@ class TaskModel extends Model
     {
         $this->id = $id;
     }
+    //Get set Title
     public function getTitle()
     {
         return $this->title;
@@ -27,6 +29,7 @@ class TaskModel extends Model
     {
         $this->title = $title;
     }
+    //Get set description
     public function getDescription()
     {
         return $this->description;
@@ -35,6 +38,7 @@ class TaskModel extends Model
     {
         $this->description = $description;
     }
+    //Get set Create
     public function getCreate_at()
     {
         return $this->created_at;
@@ -43,6 +47,7 @@ class TaskModel extends Model
     {
         $this->created_at=$created_at;
     }
+    //Get set Update
     public function getUpdate_at()
     {
         return $this->updated_at;
@@ -52,4 +57,3 @@ class TaskModel extends Model
         $this->updated_at = $updated_at;
     }
 }
-?>

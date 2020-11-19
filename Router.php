@@ -2,7 +2,7 @@
 namespace MVC;
 class Router
 {
-
+    // xac dinh controller va action va param
     static public function parse($url, $request)
     {
         $url = trim($url);
@@ -24,4 +24,3 @@ class Router
 
     }
 }
-?>

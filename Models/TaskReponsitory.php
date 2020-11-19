@@ -5,12 +5,7 @@ use MVC\Models\TaskResoucreModel;
     // function add
     public function add($model)
     {
-        return $this->save($model);
-    }
-    // function find
-    public function get($id)
-    {
-        return $this->find($id);
+        return parent::save($model);
     }
     // function delete
     public function delete($id)
@@ -24,8 +19,7 @@ use MVC\Models\TaskResoucreModel;
     }
     //function update
     public function edit($model){
-        return $this->save($model);
+        return parent::save($model);
     }
         
     }
-?>
