@@ -1,5 +1,5 @@
 <h1>Create task</h1>
-<form method='post' action='#'>
+<form method='post' action='/mvc/tasks/create/'>
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" id="title" placeholder="Enter a title" name="title">

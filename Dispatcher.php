@@ -1,4 +1,7 @@
 <?php
+namespace MVC;
+
+use MVC\Core\Controller;
 
 class Dispatcher
 {
@@ -16,12 +19,12 @@ class Dispatcher
         call_user_func_array([$controller, $this->request->action], $this->request->params);
     }
 
+    // Get controller
     public function loadController()
     {
         $name = $this->request->controller . "Controller";
-        $file = ROOT . 'Controllers/' . $name . '.php';
-        require($file);
-        $controller = new $name();
+        $nameController = "MVC\Controllers\\".$name;
+        $controller = new $nameController();
         return $controller;
     }
 

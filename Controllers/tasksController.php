@@ -1,13 +1,16 @@
 <?php
-class tasksController extends Controller
+namespace MVC\Controllers;
+use MVC\Core\Controller;
+use MVC\Models\Task;
+use MVC\Models\TaskModel;
+use MVC\Models\TaskReponsitory;
+class TasksController extends Controller
 {
     function index()
     {
-        require(ROOT . 'Models/Task.php');
-
-        $tasks = new Task();
-
-        $d['tasks'] = $tasks->showAllTasks();
+        // goi lop taskReponsitory va goi ham getAll
+        $taskAll = new TaskReponsitory();
+        $d['tasks'] = $taskAll->getAll();
         $this->set($d);
         $this->render("index");
     }
@@ -16,13 +19,18 @@ class tasksController extends Controller
     {
         if (isset($_POST["title"]))
         {
-            require(ROOT . 'Models/Task.php');
-
-            $task= new Task();
-
-            if ($task->create($_POST["title"], $_POST["description"]))
+            // require(ROOT . 'Models/Task.php');
+            
+            $taskSave = new TaskReponsitory();
+            $task = new TaskModel();
+            $task->setTitle($_POST["title"]);
+            $task->setDescription($_POST["description"]);
+            $task->setCreate_at(date("Y-m-d H:i:s"));
+           
+            if ($taskSave->save($task))
             {
-                header("Location: " . WEBROOT . "tasks/index");
+                
+                // header("Location: " . WEBROOT . "Tasks/create");
             }
         }
 
@@ -31,16 +39,21 @@ class tasksController extends Controller
 
     function edit($id)
     {
-        require(ROOT . 'Models/Task.php');
-        $task= new Task();
-
-        $d["task"] = $task->showTask($id);
-
+        $taskR= new TaskReponsitory();
+        $d["task"] = $taskR->find($id);
         if (isset($_POST["title"]))
         {
-            if ($task->edit($id, $_POST["title"], $_POST["description"]))
-            {
-                header("Location: " . WEBROOT . "tasks/index");
+            $taskM=new TaskModel();
+            $taskM->setId($id);
+            $taskM->setTitle($_POST['title']);
+            $taskM->setDescription($_POST['description']);
+            $taskM->setUpdate_at(date("Y-m-d H:i:s"));
+
+            $taskR= new TaskReponsitory();
+
+            if ($taskR->edit($taskM)){
+
+               
             }
         }
         $this->set($d);
@@ -49,11 +62,10 @@ class tasksController extends Controller
 
     function delete($id)
     {
-        require(ROOT . 'Models/Task.php');
-
-        $task = new Task();
+        $task = new TaskReponsitory();
         if ($task->delete($id))
         {
+            
             header("Location: " . WEBROOT . "tasks/index");
         }
     }
