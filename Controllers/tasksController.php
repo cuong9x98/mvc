@@ -1,5 +1,6 @@
 <?php
 namespace MVC\Controllers;
+
 use MVC\Core\Controller;
 use MVC\Models\Task;
 use MVC\Models\TaskModel;
@@ -18,18 +19,13 @@ class TasksController extends Controller
     //funcition create new data task
     function create()
     {
-        if (isset($_POST["title"]))
-        {
-            // require(ROOT . 'Models/Task.php');
-            
+        if (isset($_POST["title"])) {
             $taskSave = new TaskReponsitory();
             $task = new TaskModel();
             $task->setTitle($_POST["title"]);
             $task->setDescription($_POST["description"]);
             $task->setCreate_at(date("Y-m-d H:i:s"));
-           
-            if ($taskSave->save($task))
-            {
+            if ($taskSave->save($task)){
                 echo '<script type="text/javascript">alert("Add record to successful");</script>';
             }
         }
@@ -41,17 +37,14 @@ class TasksController extends Controller
     {
         $taskR= new TaskReponsitory();
         $d["task"] = $taskR->find($id);
-        if (isset($_POST["title"]))
-        {
+        if (isset($_POST["title"])) {
             $task=new TaskModel();
             $task->setId($id);
             $task->setTitle($_POST['title']);
             $task->setDescription($_POST['description']);
             $task->setUpdate_at(date("Y-m-d H:i:s"));
             $task->setCreate_at($task->setCreate_at($id));
-            
-            if ($taskR->save($task)){
-                // echo "<script>alert('Update successful')</script>";    
+            if ($taskR->save($task)) {
                 header("Location: " . WEBROOT . "tasks/edit/");
             }
         }
@@ -62,10 +55,8 @@ class TasksController extends Controller
     function delete($id)
     {
         $task = new TaskReponsitory();
-        if ($task->delete($id))
-        {
+        if ($task->delete($id)) {
             header("Location: " . WEBROOT . "tasks/index");
         }
     }
 }
-

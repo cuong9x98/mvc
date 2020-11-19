@@ -1,15 +1,15 @@
 <?php 
-    namespace MVC\Models;
-    use MVC\Core\Model;
+namespace MVC\Models;
 
+use MVC\Core\Model;
 class TaskModel extends Model
 {
     // Khai bao protected de lop con co the dung bien lop cha
-    protected $title;
-    protected $description;
-    protected $id;
-    protected $updated_at;
-    protected $created_at;
+    protected $id=null;
+    protected $title=null;
+    protected $description=null;
+    protected $updated_at=null;
+    protected $created_at=null;
     
     //Get set Id
     public function getId()

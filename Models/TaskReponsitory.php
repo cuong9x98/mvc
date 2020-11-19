@@ -1,7 +1,8 @@
 <?php 
 namespace MVC\Models;
+
 use MVC\Models\TaskResoucreModel;
-    class TaskReponsitory extends TaskResoucreModel{
+class TaskReponsitory extends TaskResoucreModel{
     // function add
     public function add($model)
     {
@@ -18,8 +19,9 @@ use MVC\Models\TaskResoucreModel;
         return parent::getAll();
     }
     //function update
-    public function edit($model){
+    public function edit($model)
+    {
         return parent::save($model);
     }
-        
-    }
+    
+}
